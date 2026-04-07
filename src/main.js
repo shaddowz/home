@@ -96,6 +96,7 @@ var statsEl = document.getElementById("stats");
 var COLS = 0;
 var ROWS = 0;
 var rowEls = [];
+var prevRowHtml = [];
 var density;
 var tempDen;
 
@@ -164,6 +165,7 @@ function initGrid() {
   tempDen = new Float32Array(COLS * ROWS);
   artEl.innerHTML = "";
   rowEls.length = 0;
+  prevRowHtml.length = 0;
   for (let r = 0; r < ROWS; r++) {
     const div = document.createElement("div");
     div.className = "r";
@@ -205,7 +207,10 @@ function render(now) {
         tw += m.width;
       }
     }
-    rowEls[r].innerHTML = html;
+    if (prevRowHtml[r] !== html) {
+      rowEls[r].innerHTML = html;
+      prevRowHtml[r] = html;
+    }
     rowWidths.push(tw);
   }
   const maxW = Math.max(...rowWidths);

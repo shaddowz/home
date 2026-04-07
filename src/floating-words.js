@@ -8,6 +8,8 @@ var WORDS = [
 var container = document.getElementById("floating-words");
 var recent = [];
 var activePositions = [];
+var MAX_WORDS = 8;
+var activeCount = 0;
 
 function pickWord() {
   var available = WORDS.filter(function (w) { return recent.indexOf(w) === -1; });
@@ -43,6 +45,7 @@ function isTooClose(x, y) {
 }
 
 function spawnWord() {
+  if (activeCount >= MAX_WORDS) return;
   var word = pickWord();
   var pos = getPosition();
   var duration = 4000 + Math.random() * 3000;
@@ -54,16 +57,21 @@ function spawnWord() {
   el.style.animationDuration = duration + "ms";
   container.appendChild(el);
   activePositions.push(pos);
+  activeCount++;
   setTimeout(function () {
     el.remove();
     var idx = activePositions.indexOf(pos);
     if (idx !== -1) activePositions.splice(idx, 1);
+    activeCount--;
   }, duration);
-  setTimeout(spawnWord, 2500 + Math.random() * 4000);
 }
 
+var spawnInterval = setInterval(function () {
+  spawnWord();
+}, 3000);
+
 setTimeout(function () {
-  for (var i = 0; i < 4; i++) {
-    setTimeout(spawnWord, i * 1500 + Math.random() * 2000);
+  for (var i = 0; i < 3; i++) {
+    setTimeout(spawnWord, i * 1500);
   }
 }, 2000);
