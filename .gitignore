@@ -1,0 +1,24 @@
+node_modules/
+dist/
+build/
+*.log
+.env*
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/
+coverage/
+test-results/
+playwright-report/
+
+# Dev/build tooling
+.claude/
+.specify/
+specs/
+tests/
+playwright.config.js
+CLAUDE.md
+SMOKE-TUNING.md
+public/projects.json
