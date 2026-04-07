@@ -45,7 +45,7 @@ function isTooClose(x, y) {
 function spawnWord() {
   var word = pickWord();
   var pos = getPosition();
-  var duration = 6000 + Math.random() * 6000;
+  var duration = 4000 + Math.random() * 3000;
   var el = document.createElement("div");
   el.className = "floating-word";
   el.textContent = word;
