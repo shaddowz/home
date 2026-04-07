@@ -67,12 +67,13 @@ function spawnWord() {
   }, duration);
 }
 
-var spawnInterval = setInterval(function () {
-  spawnWord();
-}, 3000);
-
-setTimeout(function () {
-  for (var i = 0; i < 3; i++) {
-    setTimeout(spawnWord, i * 1500);
-  }
-}, 2000);
+// Floating words disabled for now
+// var spawnInterval = setInterval(function () {
+//   spawnWord();
+// }, 3000);
+//
+// setTimeout(function () {
+//   for (var i = 0; i < 3; i++) {
+//     setTimeout(spawnWord, i * 1500);
+//   }
+// }, 2000);
