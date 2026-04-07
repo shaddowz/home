@@ -15,7 +15,23 @@ html, body { width: 100vw; height: 100vh; overflow: hidden; background: #06060a;
   mix-blend-mode: screen;
 }
 .text-line { letter-spacing: 0.05em; }
-.text-small { font-size: clamp(1.5rem, 4vw, 4rem); font-weight: 900; line-height: 1.2; }
+.text-small { font-size: clamp(1rem, 2.7vw, 2.7rem); font-weight: 900; line-height: 1.2; }
+.text-rotating {
+  font-size: clamp(1.5rem, 4vw, 4rem); font-weight: 900; line-height: 1.2;
+  letter-spacing: 0.05em;
+  min-height: 1.2em;
+  display: flex; align-items: center; justify-content: center;
+}
+.text-rotating span {
+  display: inline-block;
+  animation: rotatingWord 4s ease-in-out forwards;
+}
+@keyframes rotatingWord {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { opacity: 0; }
+}
 .text-large { font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 900; line-height: 1.1; }
 .text-links {
   font: 400 clamp(0.8rem, 2vw, 1.5rem)/1 "Helvetica Neue", sans-serif;

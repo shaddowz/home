@@ -1,6 +1,7 @@
 import { prepareWithSegments } from "./pretext.js";
 import { initParticles } from "./particles-init.js";
 import "./floating-words.js";
+import "./rotating-word.js";
 
 var FONT_SIZE = 14;
 var LINE_HEIGHT = 17;
@@ -89,8 +90,8 @@ function wCls(w, s) {
   return s === "italic" ? wc + " it" : wc;
 }
 
-var MAX_COLS = 200;
-var MAX_ROWS = 80;
+var MAX_COLS = 160;
+var MAX_ROWS = 60;
 var artEl = document.getElementById("art");
 var statsEl = document.getElementById("stats");
 var COLS = 0;
@@ -187,44 +188,53 @@ var fc = 0;
 var lastFps = 0;
 var dispFps = 0;
 var targetCellW = () => window.innerWidth / COLS;
+var FRAME_MS = 33; // ~30fps target
+var lastFrame = 0;
 
 function render(now) {
+  requestAnimationFrame(render);
+  if (now - lastFrame < FRAME_MS) return;
+  lastFrame = now;
   const t = now / 1000;
   updateSim(t);
   const tcw = targetCellW();
-  const rowWidths = [];
+  const rowWidths = new Float32Array(ROWS);
+  const parts = [];
   for (let r = 0; r < ROWS; r++) {
-    let html = "", tw = 0;
+    parts.length = 0;
+    let tw = 0;
+    const base = r * COLS;
     for (let c = 0; c < COLS; c++) {
-      const b = density[r * COLS + c];
+      const b = density[base + c];
       if (b < 0.025) {
-        html += " ";
+        parts.push(" ");
         tw += spaceW;
       } else {
         const m = findBest(b, tcw);
-        const ai = Math.max(1, Math.min(10, Math.round(b * 10)));
-        html += `<span class="${wCls(m.weight, m.style)} a${ai}">${esc(m.char)}</span>`;
+        const ai = Math.max(1, Math.min(10, (b * 10 + 0.5) | 0));
+        parts.push('<span class="', wCls(m.weight, m.style), " a", ai, '">', esc(m.char), "</span>");
         tw += m.width;
       }
     }
+    const html = parts.join("");
     if (prevRowHtml[r] !== html) {
       rowEls[r].innerHTML = html;
       prevRowHtml[r] = html;
     }
-    rowWidths.push(tw);
+    rowWidths[r] = tw;
   }
-  const maxW = Math.max(...rowWidths);
+  let maxW = 0;
+  for (let r = 0; r < ROWS; r++) if (rowWidths[r] > maxW) maxW = rowWidths[r];
   const blockOffset = Math.max(0, (window.innerWidth - maxW) / 2);
   for (let r = 0; r < ROWS; r++)
     rowEls[r].style.paddingLeft = blockOffset + (maxW - rowWidths[r]) / 2 + "px";
   fc++;
   if (now - lastFps > 500) {
-    dispFps = Math.round(fc / ((now - lastFps) / 1000));
+    dispFps = (fc / ((now - lastFps) / 1000) + 0.5) | 0;
     fc = 0;
     lastFps = now;
     statsEl.textContent = `${COLS}\u00d7${ROWS} | ${palette.length} variants | ${dispFps} fps`;
   }
-  requestAnimationFrame(render);
 }
 
 requestAnimationFrame(render);

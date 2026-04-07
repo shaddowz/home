@@ -1,9 +1,10 @@
 var WORDS = [
-  "AZURE", "CLAUDE", "CUSTOM MCP", "PIPELINES", "SQL", "SSAS", "POWERBI",
-  "DATA WAREHOUSE", "ADF", "DATA GOVERNANCE", "RAG", "ETL", "OPTIMIZATION",
-  "ENCRYPTION", "PII", "DATA PRIVACY", "LLM",
-  "QLIKSENSE", "QLIKCLOUD", "SSRS", "DASHBOARDS", "COMPLEX QUERYS", "WINDOW FUNCTIONS",
-  "AGENTIC WORKFLOW", "AI DRIVEN SOLUTIONS"
+  "AZURE SUITE", "CLAUDE", "VISUAL STUDIO CODE LLM INTEGRATIONS",
+  "CUSTOM MCP", "ADF PIPELINES", "SQL", "TABULAR", "POWERBI",
+  "DATA WAREHOUSE", "ADF", "DATA GOVERNANCE COMPLIANT", "ETL EXPERIENCED",
+  "PRIVACY BY DESIGN", "AI ADOPTING LLMS TO WORKFLOW", "QLIKSENSE",
+  "QLIKCLOUD", "SSRS/SSAS/SSIS", "DASHBOARD BUILDING",
+  "COMPLEX SQL SOLUTIONS", "AGENTIC WORKFLOW", "AI DRIVEN SOLUTIONS"
 ];
 var container = document.getElementById("floating-words");
 var recent = [];
@@ -29,7 +30,7 @@ function getPosition() {
     attempts++;
     if (attempts > 30) break;
   } while (
-    (x > 30 && x < 70 && y > 35 && y < 65) ||
+    (x > 20 && x < 80 && y > 28 && y < 72) ||
     isTooClose(x, y)
   );
   return { x: x, y: y };
