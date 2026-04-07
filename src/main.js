@@ -1,4 +1,5 @@
 import { prepareWithSegments } from "./pretext.js";
+import { initParticles } from "./particles-init.js";
 
 var FONT_SIZE = 14;
 var LINE_HEIGHT = 17;
@@ -177,6 +178,7 @@ window.addEventListener("resize", () => {
   resizeTimer = setTimeout(initGrid, 150);
 });
 initGrid();
+initParticles();
 
 var fc = 0;
 var lastFps = 0;

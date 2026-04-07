@@ -1,6 +1,13 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100vw; height: 100vh; overflow: hidden; background: #06060a; }
-#art { width: 100%; height: 100%; }
+#art { width: 100%; height: 100%; position: relative; z-index: 1; }
+#particles-js {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 2; pointer-events: none; background: transparent;
+  -webkit-mask-image: radial-gradient(ellipse at center, transparent 55%, black 85%);
+  mask-image: radial-gradient(ellipse at center, transparent 55%, black 85%);
+}
+#particles-js canvas { background: transparent !important; }
 .r { white-space: pre; overflow: hidden; font-family: Georgia, Palatino, "Times New Roman", serif; font-size: 14px; }
 .w3 { font-weight: 300; } .w5 { font-weight: 500; } .w8 { font-weight: 800; }
 .it { font-style: italic; }
@@ -12,5 +19,5 @@ html, body { width: 100vw; height: 100vh; overflow: hidden; background: #06060a;
 #stats {
   position: fixed; bottom: 6px; left: 0; right: 0; text-align: center;
   font: 400 10px/1 "Helvetica Neue", sans-serif; color: rgba(255,255,255,0.10);
-  pointer-events: none;
+  pointer-events: none; z-index: 3;
 }
