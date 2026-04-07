@@ -1,5 +1,6 @@
 import { prepareWithSegments } from "./pretext.js";
 import { initParticles } from "./particles-init.js";
+import "./floating-words.js";
 
 var FONT_SIZE = 14;
 var LINE_HEIGHT = 17;
