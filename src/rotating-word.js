@@ -10,7 +10,7 @@ var WORDS = [
 
 var el = document.getElementById("rotating-word");
 var recent = [];
-var DURATION = 6400;
+var DURATION = 3200;
 
 function pickWord() {
   var available = WORDS.filter(function (w) { return recent.indexOf(w) === -1; });

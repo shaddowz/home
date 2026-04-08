@@ -24,7 +24,7 @@ html, body { width: 100vw; height: 100vh; overflow: hidden; background: #06060a;
 }
 .text-rotating span {
   display: inline-block;
-  animation: rotatingWord 4s ease-in-out forwards;
+  animation: rotatingWord 3.2s ease-in-out forwards;
 }
 @keyframes rotatingWord {
   0% { opacity: 0; }
@@ -52,17 +52,16 @@ html, body { width: 100vw; height: 100vh; overflow: hidden; background: #06060a;
   position: absolute;
   font: 700 clamp(0.7rem, 1.5vw, 1.2rem)/1 "Helvetica Neue", sans-serif;
   color: rgba(180, 255, 200, 0.7);
-  text-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   opacity: 0;
   will-change: opacity;
-  animation: wordFloat 6s ease-in-out forwards;
+  contain: layout style;
 }
 @keyframes wordFloat {
   0% { opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
+  20% { opacity: 0.7; }
+  80% { opacity: 0.7; }
   100% { opacity: 0; }
 }
 @keyframes textFadeIn {

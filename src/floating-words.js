@@ -9,7 +9,7 @@ var WORDS = [
 var container = document.getElementById("floating-words");
 var recent = [];
 var activePositions = [];
-var MAX_WORDS = 8;
+var MAX_WORDS = 5;
 var activeCount = 0;
 
 function pickWord() {
@@ -21,18 +21,35 @@ function pickWord() {
   return word;
 }
 
+// Position words in a ring close to the center text but not overlapping it.
+// Center exclusion zone: x 25-75%, y 30-70%
+// Spawn zone: just outside that band, within x 8-92%, y 10-90%
 function getPosition() {
   var attempts = 0;
   var x, y;
   do {
-    x = 15 + Math.random() * 70;
-    y = 15 + Math.random() * 70;
+    // Bias toward the edges of the center zone
+    var side = Math.random();
+    if (side < 0.25) {
+      // Above center
+      x = 15 + Math.random() * 70;
+      y = 10 + Math.random() * 18;
+    } else if (side < 0.5) {
+      // Below center
+      x = 15 + Math.random() * 70;
+      y = 72 + Math.random() * 16;
+    } else if (side < 0.75) {
+      // Left of center
+      x = 8 + Math.random() * 15;
+      y = 20 + Math.random() * 60;
+    } else {
+      // Right of center
+      x = 77 + Math.random() * 15;
+      y = 20 + Math.random() * 60;
+    }
     attempts++;
-    if (attempts > 30) break;
-  } while (
-    (x > 20 && x < 80 && y > 28 && y < 72) ||
-    isTooClose(x, y)
-  );
+    if (attempts > 20) break;
+  } while (isTooClose(x, y));
   return { x: x, y: y };
 }
 
@@ -55,7 +72,7 @@ function spawnWord() {
   el.textContent = word;
   el.style.left = pos.x + "%";
   el.style.top = pos.y + "%";
-  el.style.animationDuration = duration + "ms";
+  el.style.animation = "wordFloat " + duration + "ms ease-in-out forwards";
   container.appendChild(el);
   activePositions.push(pos);
   activeCount++;
@@ -67,13 +84,12 @@ function spawnWord() {
   }, duration);
 }
 
-// Floating words disabled for now
-// var spawnInterval = setInterval(function () {
-//   spawnWord();
-// }, 3000);
-//
-// setTimeout(function () {
-//   for (var i = 0; i < 3; i++) {
-//     setTimeout(spawnWord, i * 1500);
-//   }
-// }, 2000);
+setInterval(function () {
+  spawnWord();
+}, 3500);
+
+setTimeout(function () {
+  for (var i = 0; i < 2; i++) {
+    setTimeout(spawnWord, i * 1800);
+  }
+}, 2500);
